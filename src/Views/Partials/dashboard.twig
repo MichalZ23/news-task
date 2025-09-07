@@ -1,0 +1,35 @@
+<div>
+    {% if flash is defined %}
+        <p>{{ flash }}</p>
+    {% endif  %}
+    {% if news is not empty %}
+        {% for element in news %}
+            <div>
+                <h3>{{ element.title }}</h3>
+                <p>{{ element.description }}</p>
+                <button class="edit-news-btn"
+                        data-id="{{ element.id }}"
+                        data-title="{{ element.title }}"
+                        data-description="{{ element.description }}">
+                    Edit
+                </button>
+                <button class="delete-news-btn" data-id="{{ element.id }}">Delete</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div>
+        <form id="createNewsForm">
+            <input type="hidden" name="action" value="create_news" id="newsAction">
+            <input type="hidden" name="id" id="newsId">
+            <label for="newsTitle" hidden>Title</label>
+            <input type="text" name="title" id="newsTitle" placeholder="Title" required>
+
+            <label for="newsDescription" hidden>Description</label>
+            <textarea name="description" id="newsDescription" placeholder="Description" required></textarea>
+
+            <button type="submit" id="createNewsBtn">Create</button>
+            <button type="button" id="cancelEditBtn" hidden>Cancel</button>
+        </form>
+    </div>
+    <button id="logoutBtn">Logout</button>
+</div>
