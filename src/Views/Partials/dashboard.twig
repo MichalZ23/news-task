@@ -3,6 +3,7 @@
         <p>{{ flash }}</p>
     {% endif  %}
     {% if news is not empty %}
+        <h2>All News</h2>
         {% for element in news %}
             <div>
                 <h3>{{ element.title }}</h3>
@@ -18,6 +19,7 @@
         {% endfor %}
     {% endif %}
     <div>
+        <div id="newsFormTitle">Create News</div>
         <form id="createNewsForm">
             <input type="hidden" name="action" value="create_news" id="newsAction">
             <input type="hidden" name="id" id="newsId">
