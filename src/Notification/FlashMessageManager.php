@@ -6,13 +6,12 @@ namespace App\Notification;
 
 final readonly class FlashMessageManager
 {
-    // TODO handle errors in flashes
     public function setFlashMessage(
         FlashMessage $flashMessage,
     ): void {
         $_SESSION["flash"] = [
             'message' => $flashMessage->getMessage(),
-            'type' => $flashMessage->getFlashMessageType()->value,
+            'type' => $flashMessage->getType()->value,
         ];
     }
 

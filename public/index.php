@@ -7,7 +7,7 @@ use App\Model\News\NewsRepository;
 use App\Notification\FlashMessageManager;
 use App\Router\AppPostRouter;
 use App\Security\Auth;
-// TODO add README
+
 require __DIR__ . '/../src/bootstrap.php';
 
 $flashMessageManager = new FlashMessageManager();
@@ -30,7 +30,6 @@ $appRouteController = new AppPostRouter(
 );
 
 if ($method === 'POST') {
-    //todo add csrf
     $action = $_POST["action"] ?? '';
     $response = $appRouteController->handlePost($action, $_POST);
 

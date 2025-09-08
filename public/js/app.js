@@ -64,8 +64,8 @@
         });
     }
 
-    function wireCreateNewsForm() {
-        const form = document.getElementById('createNewsForm');
+    function wireSaveNewsForm() {
+        const form = document.getElementById('saveNewsForm');
         if (!form) {
             return;
         }
@@ -85,7 +85,7 @@
             newsIdInput.value = '';
             submitButton.textContent = 'Create';
             newsFormTitle.textContent = 'Create News'
-            cancelButton.hidden = true;
+            cancelButton.style.display = 'none';
         });
 
         form.addEventListener('submit', async (e) => {
@@ -113,7 +113,7 @@
                 newsIdInput.value = button.dataset.id;
                 submitButton.textContent = 'Save';
                 newsFormTitle.textContent = 'Edit News'
-                cancelButton.hidden = false;
+                cancelButton.style.display = 'inline-block';
             });
         });
     }
@@ -122,7 +122,7 @@
         wireLoginForm();
         wireLogoutButton();
         wireDeleteNewsButtons();
-        wireCreateNewsForm();
+        wireSaveNewsForm();
         wireEditNewsButtons();
     }
 

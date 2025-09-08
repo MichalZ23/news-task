@@ -1,18 +1,19 @@
 <div>
     {% if flash is not null %}
-        <p>{{ flash.message }}</p>
-    {% endif  %}
-    <form id="loginForm" method="post" action="/" novalidate>
+        <div class="flash flash--{{ flash.type.value }}">{{ flash.message }}</div>
+    {% endif %}
+
+    <form id="loginForm" method="post" action="/" novalidate class="form">
         <input type="hidden" name="action" value="login">
         <div>
             <label for="login" hidden>Username</label>
-            <input type="text" id="login" name="login" placeholder="Username" required autocomplete="username">
+            <input type="text" id="login" name="login" placeholder="Username" required autocomplete="username" class="input">
         </div>
         <div>
             <label for="password" hidden>Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password">
+            <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password" class="input">
         </div>
-        <button type="submit">Login</button>
+
+        <button type="submit" class="btn btn--full">Login</button>
     </form>
-    <div id="loginError" hidden></div>
 </div>

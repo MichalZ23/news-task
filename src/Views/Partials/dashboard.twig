@@ -1,37 +1,51 @@
 <div>
     {% if flash is not null %}
-        <p>{{ flash.message }}</p>
+        <div class="flash flash--{{ flash.type.value }} ">{{ flash.message }}</div>
     {% endif  %}
+
     {% if news is not empty %}
-        <h2>All News</h2>
-        {% for element in news %}
-            <div>
-                <h3>{{ element.title }}</h3>
-                <p>{{ element.description }}</p>
-                <button class="edit-news-btn"
-                        data-id="{{ element.id }}"
-                        data-title="{{ element.title }}"
-                        data-description="{{ element.description }}">
-                    Edit
-                </button>
-                <button class="delete-news-btn" data-id="{{ element.id }}">Delete</button>
-            </div>
-        {% endfor %}
+        <div class="section-title">All News</div>
+        <div class="news-list">
+            {% for element in news %}
+                <div class="news-item" data-id="{{ element.id }}">
+                    <div class="news-left">
+                        <div class="news-title">{{ element.title }}</div>
+                        <div class="news-desc">{{ element.description }}</div>
+                    </div>
+                    <div class="news-actions">
+                        <button class="btn btn--edit edit-news-btn bg-image"
+                                data-id="{{ element.id }}"
+                                data-title="{{ element.title }}"
+                                data-description="{{ element.description }}">
+                        </button>
+
+                        <button class="btn btn--close delete-news-btn bg-image" data-id="{{ element.id }}"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
-    <div>
-        <div id="newsFormTitle">Create News</div>
-        <form id="createNewsForm">
+
+    <section>
+        <div class="edit-news-form-title-wrapper">
+            <div id="newsFormTitle" class="section-title edit-news-form-title">Create News</div>
+            <button type="button" id="cancelEditBtn" class="btn btn--ghost btn--close bg-image"></button>
+        </div>
+        <form id="saveNewsForm" class="form">
             <input type="hidden" name="action" value="create_news" id="newsAction">
             <input type="hidden" name="id" id="newsId">
+
             <label for="newsTitle" hidden>Title</label>
-            <input type="text" name="title" id="newsTitle" placeholder="Title" required>
+            <input type="text" name="title" id="newsTitle" placeholder="Title" required class="input">
 
             <label for="newsDescription" hidden>Description</label>
-            <textarea name="description" id="newsDescription" placeholder="Description" required></textarea>
+            <textarea name="description" id="newsDescription" placeholder="Description" required class="input input--textarea"></textarea>
 
-            <button type="submit" id="createNewsBtn">Create</button>
-            <button type="button" id="cancelEditBtn" hidden>Cancel</button>
+            <div>
+                <button type="submit" id="createNewsBtn" class="btn btn--full">Create</button>
+            </div>
         </form>
-    </div>
-    <button id="logoutBtn">Logout</button>
+    </section>
+
+    <button id="logoutBtn" class="btn btn--full">Logout</button>
 </div>

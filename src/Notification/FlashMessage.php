@@ -8,7 +8,7 @@ final readonly class FlashMessage
 {
     public function __construct(
         private string $message,
-        private FlashMessageTypeEnum $flashMessageType = FlashMessageTypeEnum::INFO,
+        private FlashMessageTypeEnum $type = FlashMessageTypeEnum::INFO,
     ) {
     }
 
@@ -17,8 +17,8 @@ final readonly class FlashMessage
         return $this->message;
     }
 
-    public function getFlashMessageType(): FlashMessageTypeEnum
+    public function getType(): FlashMessageTypeEnum
     {
-        return $this->flashMessageType;
+        return $this->type;
     }
 }
