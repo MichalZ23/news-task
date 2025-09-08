@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use App\Controller\AppPostRouteController;
 use App\Controller\AuthController;
 use App\Controller\NewsController;
 use App\Model\News\NewsRepository;
 use App\Notification\FlashMessageManager;
+use App\Router\AppPostRouter;
 use App\Security\Auth;
-
+// TODO add README
 require __DIR__ . '/../src/bootstrap.php';
 
 $flashMessageManager = new FlashMessageManager();
@@ -18,15 +18,15 @@ $auth = new Auth($pdo);
 $newsController = new NewsController(
     new NewsRepository($pdo),
     $twig,
+    $flashMessageManager,
 );
 
-$appRouteController = new AppPostRouteController(
+$appRouteController = new AppPostRouter(
     new AuthController(
         $auth,
-        $twig,
+        $flashMessageManager,
     ),
     $newsController,
-    $flashMessageManager,
 );
 
 if ($method === 'POST') {
@@ -40,6 +40,6 @@ if ($method === 'POST') {
 
 $partial = $auth->checkUserIsLoggedIn()
     ? $newsController->getDashboard($flash)
-    : $twig->render('Partials/login.twig');
+    : $twig->render('Partials/login.twig', ['flash' => $flash]);
 
 echo $twig->render('layout.twig', ['partial' => $partial]);

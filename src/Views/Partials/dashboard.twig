@@ -1,6 +1,6 @@
 <div>
-    {% if flash is defined %}
-        <p>{{ flash }}</p>
+    {% if flash is not null %}
+        <p>{{ flash.message }}</p>
     {% endif  %}
     {% if news is not empty %}
         <h2>All News</h2>

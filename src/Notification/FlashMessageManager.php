@@ -6,12 +6,17 @@ namespace App\Notification;
 
 final readonly class FlashMessageManager
 {
-    public function setMessage(string $message): void
-    {
-        $_SESSION["flash"] = $message;
+    // TODO handle errors in flashes
+    public function setFlashMessage(
+        FlashMessage $flashMessage,
+    ): void {
+        $_SESSION["flash"] = [
+            'message' => $flashMessage->getMessage(),
+            'type' => $flashMessage->getFlashMessageType()->value,
+        ];
     }
 
-    public function pullMessage(): ?string
+    public function pullMessage(): ?FlashMessage
     {
         $message = $this->getMessage();
         $this->clear();
@@ -19,9 +24,16 @@ final readonly class FlashMessageManager
         return $message;
     }
 
-    private function getMessage(): ?string
+    private function getMessage(): ?FlashMessage
     {
-        return $_SESSION["flash"] ?? null;
+        if (!isset($_SESSION["flash"]['message']) && !isset($_SESSION["flash"]['type'])) {
+            return null;
+        }
+
+        return new FlashMessage(
+            $_SESSION["flash"]['message'],
+            FlashMessageTypeEnum::from($_SESSION["flash"]['type'])
+        );
     }
 
     private function clear(): void

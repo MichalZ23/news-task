@@ -1,4 +1,7 @@
 <div>
+    {% if flash is not null %}
+        <p>{{ flash.message }}</p>
+    {% endif  %}
     <form id="loginForm" method="post" action="/" novalidate>
         <input type="hidden" name="action" value="login">
         <div>

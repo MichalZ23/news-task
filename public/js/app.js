@@ -4,13 +4,6 @@
         return;
     }
 
-    function htmlToNode(html) {
-        const template = document.createElement('template');
-        template.innerHTML = html.trim();
-
-        return template.content;
-    }
-
     async function postForm(formData) {
         const body = formData instanceof HTMLFormElement ? new FormData(formData) : formData;
         const response = await fetch('/', {
@@ -22,26 +15,9 @@
         return response.json();
     }
 
-    function updateAppElement(html) {
-        app.innerHTML = '';
-        app.appendChild(htmlToNode(html));
-        wireAll();
-    }
-
-    async function handleResponse(data, errorPanel) {
-        if (data.ok) {
-            if (data.redirect) {
-                window.location.href = data.redirect;
-            } else if (data.html) {
-                updateAppElement(data.html);
-            }
-        } else {
-            if (errorPanel) {
-                errorPanel.textContent = data.error || 'Unknown Error';
-                errorPanel.hidden = false;
-            } else {
-                alert(data.error || 'Something went wrong');
-            }
+    async function handleResponse(data) {
+        if (data.redirect) {
+            window.location.href = data.redirect;
         }
     }
 
@@ -51,23 +27,11 @@
             return;
         }
 
-        const errorPanel = document.getElementById('loginError');
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (errorPanel) {
-                errorPanel.hidden = true;
-            }
 
-            try {
-                const data = await postForm(form);
-                await handleResponse(data, errorPanel);
-            } catch {
-                if (errorPanel) {
-                    errorPanel.textContent = 'Connection Error';
-                    errorPanel.hidden = false;
-                }
-            }
+            const data = await postForm(form);
+            await handleResponse(data);
         });
     }
 
