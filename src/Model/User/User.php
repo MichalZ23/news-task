@@ -9,15 +9,11 @@ use App\Model\AbstractModel;
 final readonly class User extends AbstractModel
 {
     public function __construct(
-        private int $id,
+        ?int $id,
         private string $login,
         private string $password,
     ) {
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
+        parent::__construct($id);
     }
 
     public function getLogin(): string
@@ -30,8 +26,12 @@ final readonly class User extends AbstractModel
         return $this->password;
     }
 
-    public static function createFromArray(array $data): AbstractModel
+    public static function createFromDbArray(array $data): AbstractModel
     {
+        if ($data['id'] === null) {
+            throw new \LogicException('User ID is null');
+        }
+
         return new self(
             (int) $data['id'],
             (string) $data['login'],

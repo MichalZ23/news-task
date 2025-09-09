@@ -29,7 +29,7 @@ $appRouteController = new AppPostRouter(
     $newsController,
 );
 
-if ($method === 'POST') {
+if ($method === 'POST' && canHandlePost($auth->checkUserIsLoggedIn())) {
     $action = $_POST["action"] ?? '';
     $response = $appRouteController->handlePost($action, $_POST);
 
@@ -42,3 +42,8 @@ $partial = $auth->checkUserIsLoggedIn()
     : $twig->render('Partials/login.twig', ['flash' => $flash]);
 
 echo $twig->render('layout.twig', ['partial' => $partial]);
+
+function canHandlePost(bool $isLoggedIn): bool
+{
+    return $isLoggedIn || (isset($_POST['action']) && $_POST['action'] === 'login');
+}

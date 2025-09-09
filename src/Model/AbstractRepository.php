@@ -27,7 +27,7 @@ abstract readonly class AbstractRepository
             return null;
         }
 
-        return $this->modelClass::createFromArray($modelArray);
+        return $this->modelClass::createFromDbArray($modelArray);
     }
 
     /** @return Model[] */
@@ -42,7 +42,7 @@ abstract readonly class AbstractRepository
         }
 
         return array_map(
-            fn (array $modelArray) => $this->modelClass::createFromArray($modelArray),
+            fn (array $modelArray) => $this->modelClass::createFromDbArray($modelArray),
             $modelsArray,
         );
     }
@@ -53,7 +53,7 @@ abstract readonly class AbstractRepository
         $query->execute(['id' => $id]);
     }
 
-    public function create(array $params): void
+    public function insert(array $params): void
     {
         $columnNamesQueryPart = '(' . implode(', ', array_keys($params)) . ')';
         $placeholders = rtrim(str_repeat('?,', count($params)), ',');

@@ -6,9 +6,8 @@ namespace App\Notification;
 
 final readonly class FlashMessageManager
 {
-    public function setFlashMessage(
-        FlashMessage $flashMessage,
-    ): void {
+    public function setFlashMessage(FlashMessage $flashMessage): void
+    {
         $_SESSION["flash"] = [
             'message' => $flashMessage->getMessage(),
             'type' => $flashMessage->getType()->value,

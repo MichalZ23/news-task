@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\News\News;
 use App\Model\News\NewsRepository;
 use App\Notification\FlashMessage;
 use App\Notification\FlashMessageManager;
@@ -33,17 +34,17 @@ final readonly class NewsController extends BaseController
         return $this->getSuccessResponse();
     }
 
-    public function create(array $params): array
+    public function create(News $news): array
     {
-        $this->newsRepository->create($params);
+        $this->newsRepository->insert($news->toParams());
         $this->flashMessageManager->setFlashMessage(new FlashMessage('News was successfully created!'));
 
         return $this->getSuccessResponse();
     }
 
-    public function update(array $params): array
+    public function update(News $news): array
     {
-        $this->newsRepository->update($params);
+        $this->newsRepository->update($news->toParams());
         $this->flashMessageManager->setFlashMessage(new FlashMessage('News was successfully changed!'));
 
         return $this->getSuccessResponse();

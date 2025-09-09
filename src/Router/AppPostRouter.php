@@ -6,6 +6,7 @@ namespace App\Router;
 
 use App\Controller\AuthController;
 use App\Controller\NewsController;
+use App\Model\News\News;
 
 final readonly class AppPostRouter
 {
@@ -20,15 +21,12 @@ final readonly class AppPostRouter
         return match ($action) {
             'login' => $this->authController->login($post),
             'logout' => $this->authController->logout(),
-            'create_news' => $this->newsController->create([
-                'title' => $post['title'],
-                'description' => $post['description'],
-            ]),
-            'update_news' => $this->newsController->update([
-                'id' => $post['id'],
-                'title' => $post['title'],
-                'description' => $post['description'],
-            ]),
+            'create_news' => $this->newsController->create(new News(null, $post['title'], $post['description'])),
+            'update_news' => $this->newsController->update(new News(
+                (int) $post['id'],
+                $post['title'],
+                $post['description'],
+            )),
             'delete_news' => $this->newsController->delete((int)$post['id']),
             default => ['ok' => false, 'error' => 'Unknown action'],
         };
