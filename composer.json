@@ -1,6 +1,7 @@
 {
   "name": "cgrd/news-task",
   "require": {
+    "php": "^8.3",
     "twig/twig": "^3.10",
     "ext-pdo": "*"
   },
